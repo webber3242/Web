@@ -639,7 +639,7 @@ public:
 			ImGui::SliderInt("Delay##sliderautoBanDelay", &S.gameTab.autoBanDelay, 0, 10000, "%d ms");
 
 			ImGui::SameLine();
-
+		#{
 			ImGui::Checkbox("Instant Mute", &S.gameTab.instantMute);
 
 			/*
@@ -705,7 +705,8 @@ public:
 					}
 
 					std::vector<std::pair<int, int>> champsToBuy; // price, id
-					std::string getCatalog = LCU::Request("GET", "https://127.0.0.1/lol-store/v1/catalog");
+					std::string getCatalog = LCU::Request("GET", "https://127.0.0.1/lol-store/v1/catalog") 
+				}
 					if (reader->parse(getCatalog.c_str(), getCatalog.c_str() + static_cast<int>(getCatalog.length()), &root, &err))
 					{
 						if (root.isArray())
