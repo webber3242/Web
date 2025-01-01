@@ -58,74 +58,9 @@ public:
 			static std::vector<std::string> firstPosition = { "UNSELECTED", "TOP", "JUNGLE", "MIDDLE", "BOTTOM", "UTILITY", "FILL" };
 			static std::vector<std::string> secondPosition = { "UNSELECTED", "TOP", "JUNGLE", "MIDDLE", "BOTTOM", "UTILITY", "FILL" };
 
-			static int gameID = 0;
+	p		static int gameID = 0;
 
-			ImGui::Columns(4, nullptr, false);
 
-			if (ImGui::Button("Quickplay"))
-				gameID = Quickplay;
-
-			if (ImGui::Button("Draft pick"))
-				gameID = DraftPick;
-
-			if (ImGui::Button("Solo/Duo"))
-				gameID = SoloDuo;
-
-			if (ImGui::Button("Flex"))
-				gameID = Flex;
-
-			ImGui::NextColumn();
-
-			if (ImGui::Button("ARAM"))
-				gameID = ARAM;
-
-			if (ImGui::Button("ARURF"))
-				gameID = ARURF;
-
-			if (ImGui::Button("Ultimate Spellbook"))
-				gameID = UltimateSpellbook;
-
-			if (ImGui::Button("ARURF 1V1 (PBE)"))
-				gameID = 901;
-
-			/*if (ImGui::Button("URF"))
-				gameID = 318;*/
-
-			ImGui::NextColumn();
-
-			if (ImGui::Button("TFT Normal"))
-				gameID = TFTNormal;
-
-			if (ImGui::Button("TFT Ranked"))
-				gameID = TFTRanked;
-
-			if (ImGui::Button("TFT Hyper Roll"))
-				gameID = TFTHyperRoll;
-
-			if (ImGui::Button("TFT Double Up"))
-				gameID = TFTDoubleUp;
-
-			ImGui::NextColumn();
-
-			if (ImGui::Button("TFT Tutorial"))
-				gameID = TFTTutorial;
-
-			if (ImGui::Button("Practice Tool"))
-			{
-				custom =
-					R"({"customGameLobby":{"configuration":{"gameMode":"PRACTICETOOL","gameMutator":"","gameServerRegion":"","mapId":11,"mutators":{"id":1},"spectatorPolicy":"AllAllowed","teamSize":1},"lobbyName":"KBot","lobbyPassword":null},"isCustom":true})";
-			}
-
-			if (ImGui::Button("Practice Tool 5v5"))
-			{
-				custom =
-					R"({"customGameLobby":{"configuration":{"gameMode":"PRACTICETOOL","gameMutator":"","gameServerRegion":"","mapId":11,"mutators":{"id":1},"spectatorPolicy":"AllAllowed","teamSize":5},"lobbyName":"KBot","lobbyPassword":null},"isCustom":true})";
-			}
-
-			if (ImGui::Button("Clash"))
-				gameID = Clash;
-
-			ImGui::Columns(1);
 
 			ImGui::Separator();
 
@@ -194,37 +129,37 @@ public:
 			static size_t indexBots = 0; // Here we store our selection data as an index.
 			auto labelBots = "Bot";
 			if (!botChamps.empty())
-				labelBots = botChamps[indexBots].second.c_str();
-			if (ImGui::BeginCombo("##comboBots", labelBots, 0))
-			{
-				if (botChamps.empty())
-				{
-					std::string getBots = LCU::Request("GET", "https://127.0.0.1/lol-lobby/v2/lobby/custom/available-bots");
-					Json::CharReaderBuilder builder;
-					const std::unique_ptr<Json::CharReader> reader(builder.newCharReader());
-					JSONCPP_STRING err;
-					Json::Value root;
-					if (reader->parse(getBots.c_str(), getBots.c_str() + static_cast<int>(getBots.length()), &root, &err))
-					{
-						if (root.isArray())
-						{
-							for (auto& i : root)
-							{
-								std::pair temp = { i["id"].asInt(), i["name"].asString() };
-								botChamps.emplace_back(temp);
-							}
-							std::ranges::sort(botChamps, [](std::pair<int, std::string> a, std::pair<int, std::string> b) {
-								return a.second < b.second;
-								});
-						}
-					}
-				}
-
-				for (size_t n = 0; n < botChamps.size(); n++)
-				{
-					const bool is_selected = (indexBots == n);
-					if (ImGui::Selectable(botChamps[n].second.c_str(), is_selected))
-						indexBots = n;
+#				labelBots = botChamps[indexBots].second.c_str();
+#			if (ImGui::BeginCombo("##comboBots", labelBots, 0))
+#			{
+#				if (botChamps.empty())
+#				{
+#					std::string getBots = LCU::Request("GET", "https://127.0.0.1/lol-lobby/v2/lobby/custom/available-bots");
+#					Json::CharReaderBuilder builder;
+#					const std::unique_ptr<Json::CharReader> reader(builder.newCharReader());
+#					JSONCPP_STRING err;
+#					Json::Value root;
+#					if (reader->parse(getBots.c_str(), getBots.c_str() + static_cast<int>(getBots.length()), &root, &err))
+#					{
+#						if (root.isArray())
+#						{
+#							for (auto& i : root)
+#							{
+#								std::pair temp = { i["id"].asInt(), i["name"].asString() };
+#								botChamps.emplace_back(temp);
+#							}
+#							std::ranges::sort(botChamps, [](std::pair<int, std::string> a, std::pair<int, std::string> b) {
+#								return a.second < b.second;
+#								});
+#						}
+#					}
+#				}
+#
+#				for (size_t n = 0; n < botChamps.size(); n++)
+#				{
+#					const bool is_selected = (indexBots == n);
+#
+#					#						indexBots = n;
 
 					if (is_selected)
 						ImGui::SetItemDefaultFocus();
@@ -432,7 +367,7 @@ public:
 
 			ImGui::NextColumn();
 
-			static std::vector<std::pair<std::string, int>> itemsInvite = { {"**Default", 0} };
+			static std::vector<std::air<std::string, int>> itemsInvite = { {"**Default", 0} };
 			static size_t itemIdxInvite = 0;
 			auto labelInvite = itemsInvite[itemIdxInvite].first.c_str();
 
